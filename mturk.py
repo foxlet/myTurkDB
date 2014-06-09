@@ -16,15 +16,15 @@ br.addheaders = [("User-agent", "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.
 #br.set_cookiejar(cj)
 
 #Connect to MySQL and create cursor object for executing queries
-db = MySQLdb.connect(host="localhost", user="user", passwd="passwd", db="mturk")
+db = MySQLdb.connect(host="localhost", user="mturk", passwd="mturk", db="mturk")
 cur = db.cursor()
 
 #Sign into mTurk
 sign_in = br.open('https://mturk.com/mturk/beginsignin')  
 
 br.select_form(name="signIn")  
-br["email"] = 'user@mail.com' 
-br["password"] = 'password'
+br["email"] = 'email@gmail.com' 
+br["password"] = 'pass'
 logged_in = br.submit()
 
 #Save Cookie Jar
@@ -78,6 +78,21 @@ pending_status = br.open('https://mturk.com/mturk/status')
 status_soup = pending_status.read()
 status_soup = BeautifulSoup(status_soup, parse_only=SoupStrainer('a'))
 
+def gather_status_links():
+        for pending_date in pending_hits_list:
+                pending_date = str(pending_date[0])
+                hitattr = pending_date.split("-")
+                dateswap = hitattr[1] + hitattr[2] + hitattr[0]
+                pending_date_list.append(dateswap)
+
+        for pending_link in status_soup:
+                if pending_link.has_attr('href'):
+                        if "statusdetail?encodedDate" in pending_link['href'] and pending_link['href'].split('=')[-1] > max(pending_date_list): pending_link_list.append(pending_link['href'])
+                        for pending_date in pending_date_list:
+                                if pending_date not in pending_link['href'] or pending_link['href'].split('=')[-1] > max(pending_date_list): continue
+                                else: pending_link_list.append(pending_link['href'])
+
+
 if len(pending_hits_list) == 0:
 	cur.execute("""SELECT COUNT(*) FROM hitdb;""")
 	hitcount = cur.fetchall()
@@ -88,19 +103,6 @@ if len(pending_hits_list) == 0:
 				if "statusdetail?encodedDate" in pending_link['href']: pending_link_list.append(pending_link['href'])	
 else: gather_status_links()
 
-def gather_status_links():
-	for pending_date in pending_hits_list:
-		pending_date = str(pending_date[0])
-		hitattr = pending_date.split("-")
-		dateswap = hitattr[1] + hitattr[2] + hitattr[0]
-		pending_date_list.append(dateswap)
-
-	for pending_link in status_soup:
-		if pending_link.has_attr('href'):
-			if "statusdetail?encodedDate" in pending_link['href'] and pending_link['href'].split('=')[-1] > max(pending_date_list): pending_link_list.append(pending_link['href'])
-			for pending_date in pending_date_list:
-				if pending_date not in pending_link['href'] or pending_link['href'].split('=')[-1] > max(pending_date_list): continue
-				else: pending_link_list.append(pending_link['href'])
 
 #Find pages that need hits updated
 pending_status_list = []
