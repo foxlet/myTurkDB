@@ -23,8 +23,8 @@ cur = db.cursor()
 sign_in = br.open('https://mturk.com/mturk/beginsignin')  
 
 br.select_form(name="signIn")  
-br["email"] = 'email@gmail.com' 
-br["password"] = 'pass'
+br["email"] = 'delirium.nocturnum@gmail.com' 
+br["password"] = 'TastyIPA55'
 logged_in = br.submit()
 
 #Save Cookie Jar
@@ -42,20 +42,6 @@ approved = str(dash_soup.find_all(id='approved_hits_earnings_amount')[0].text).s
 bonus = str(dash_soup.find_all(id='bonus_earnings_amount')[0].text).strip("$").encode("utf-8")
 total = str(dash_soup.find_all(id='total_earnings_amount')[0].text).strip("$").encode("utf-8")
 transfer = str(dash_soup.find_all(id='transfer_earnings')[0].text).strip("$").encode("utf-8")
-
-dash_odd = dash_soup.find_all('tr','odd')
-submitted_hits = dash_odd[5]
-rejected_hits = dash_odd[6]
-
-dash_even = dash_soup.find_all('tr','even')
-approved_hits = dash_even[4]
-pending_hits = dash_even[5]
-
-#Break out dashboard into manageable lists
-submitted_hits = str(submitted_hits.find_all('td')[1].text).encode("utf-8")
-rejected_hits = str(rejected_hits.find_all('td')[1].text).encode("utf-8")
-approved_hits = str(approved_hits.find_all('td')[1].text).encode("utf-8")
-pending_hits = str(pending_hits.find_all('td')[1].text).encode("utf-8")
 
 #Get worker ID, and name, store worker values to list
 worker_ID = str(dash_soup.find_all('span','orange_text_right')[0].text).strip('Your Worker ID: ').encode("utf-8")
