@@ -49,6 +49,8 @@ export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 
 sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install mysql-python
 
+sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+
 #echo You can start the server from the SQL Panel that will open...
 
 #open ~/Library/PreferencePanes/MySQL.prefPane/
