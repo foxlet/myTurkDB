@@ -49,7 +49,7 @@ alias mysqlstop='sudo /usr/local/mysql/support-files/mysql.server stop'
 
 export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 
-sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install mysql-python
+sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install mysql-python==1.2.3
 
 sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
 
