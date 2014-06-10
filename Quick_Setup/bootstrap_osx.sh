@@ -55,6 +55,6 @@ sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip 
 
 mysqlstart
 
-sh sql.sh
+sh sql_osx.sh
 
 echo Setup is done.
