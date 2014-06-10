@@ -23,8 +23,8 @@ cur = db.cursor()
 sign_in = br.open('https://mturk.com/mturk/beginsignin')  
 
 br.select_form(name="signIn")  
-br["email"] = 'delirium.nocturnum@gmail.com' 
-br["password"] = 'TastyIPA55'
+br["email"] = 'email' 
+br["password"] = 'pass'
 logged_in = br.submit()
 
 #Save Cookie Jar
