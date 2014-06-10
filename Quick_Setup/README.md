@@ -18,3 +18,10 @@ The quick setup script for Mac OS X can be ran with `sh bootstrap_osx.sh`
 
 The script will automatically download all the necessary Python dependencies if needed.
 MySQL will also be automatically downloaded and installed for OS X, as well as the myTurkBD tables.
+
+##### Tested Versions and known issues
+
+Quick Setup for OS X has been tested on 
+
++ Mac OS X Yosemite - 10.10 (Build 14A238x) - Python 2.7.6
+  + The script may fail at installing the MySQL Startup Item. This will not impact myTurkDB, but you will have to manually start up MySQL every time you reboot.
