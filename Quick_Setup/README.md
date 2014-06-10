@@ -1,7 +1,7 @@
 Quick Setup Scripts for myTurkDB
 ========
 
-These  are platform-specific scripts to help get setup an user's environment for myTurkDB
+These  are platform-specific scripts to help setup an user's environment for myTurkDB
 
 ### Quick Setup on Mac OS X
 
