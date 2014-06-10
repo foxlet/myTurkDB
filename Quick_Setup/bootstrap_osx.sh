@@ -37,6 +37,8 @@ sudo chown root:wheel /Library/StartupItems/MySQLCOM *
 
 touch .bash_login
 
+echo Setting up environment...
+
 export set MYSQL_HOME=/usr/local/mysql-5.6.19-osx10.7-x86_64
 
 export set PATH=$PATH:$MYSQL_HOME/bin
