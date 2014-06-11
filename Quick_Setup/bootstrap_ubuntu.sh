@@ -1,3 +1,6 @@
+#Bootstrap for Ubuntu
+#by rod156
+
 echo Setting up compiling tools
 
 sudo apt-get install build-essential
@@ -21,7 +24,6 @@ sudo pip install mechanize
 echo Setting up MySQL...
 
 sudo apt-get install mysql-server mysql-client-core-5.5 libmysqlclient-dev
-
 
 touch .bash_login
 
