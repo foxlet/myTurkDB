@@ -18,55 +18,77 @@ The script requires manual setup of MySQL and the initial tables (one for hits, 
 
 1. You will need to download and install **MySQL**
 
-http://www.mysql.com/downloads/
+ + http://www.mysql.com/downloads/
 
-http://dev.mysql.com/doc/refman/5.1/en/installing.html
+ + http://dev.mysql.com/doc/refman/5.1/en/installing.html
 
 2. You will need to download and install **Python 2.7.X**
 
-https://www.python.org/download/releases/2.7.7/
+ + https://www.python.org/download/releases/2.7.7/
 
 3. Install the following Python modules...
 
-*If you don't want to manually install the extra modules, then get Pip, it works in most OS's and will make installing the modules much easier.**
+*If you don't want to manually install the extra modules, then get Pip, it works in most OS's and will make installing the modules much easier.*
 
-**https://pip.pypa.io/en/latest/installing.html**
+*https://pip.pypa.io/en/latest/installing.html*
 
 The extra modules you will need are:
 
 + BeautifulSoup: this module is used for parsing HTML. (http://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 
+```bash
 pip install beautifulsoup4
+```
 
 + Mechanize: this is the 'browser' the script uses. (http://wwwsearch.sourceforge.net/mechanize/)
 
+```bash
 pip install mechanize
+```
 
-+ MySQLdb: this connects to MySQL. (http://mysql-python.sourceforge.net/MySQLdb.html)
++ MySQLdb: this connects to MySQL. **Version 1.2.3 Required** (http://mysql-python.sourceforge.net/MySQLdb.html)
 
-pip install mysql-python
+```bash
+pip install mysql-python==1.2.3
+```
 
-
-Still with me? Good! The hardest part is done. From here we will need to set up the database and tables for MySQL. Since I'm such a swell guy, below you will find the instructions for setting these up from scratch. You should be able to copy/paste most of this and just run it to get going. If you have any questions about what different parts mean, feel free to ask. All of this will be run from the mysql command line (http://dev.mysql.com/doc/refman/5.6/en/mysql.html).
+Still with me? Good! The hardest part is done. From here we will need to set up the database and tables for MySQL. Since I'm such a swell guy, below you will find the instructions for setting these up from scratch. You should be able to copy/paste most of this and just run it to get going. All of this will be run from the mySQL command line (http://dev.mysql.com/doc/refman/5.6/en/mysql.html).
 
 
 This will set up the database and the user.
-Code:
+
+```sql
 create database mturk;
-Code:
+```
+
+```sql
 grant usage on *.* to mturk@localhost identified by 'mturk';
-Code:
+```
+
+```sql
 grant all privileges on mturk.* to mturk@localhost;
-You should be able to test the new user by running the following after exiting your mysql session:
-Code:
+```
+
+You should be able to test the new user by running the following using a console, after exiting your mySQL session:
+
+```bash
 mysql -u mturk -p'mturk' mturk
+```
 
 This will set up the tables.
-Code:
+
+```sql
 CREATE TABLE hitdb (hitId VARCHAR(100), date DATE, requesterName VARCHAR(100), requesterId VARCHAR(50), title VARCHAR(200), reward FLOAT, status VARCHAR(100), feedback VARCHAR(200), workerId VARCHAR(50));
-Code:
+```
+
+```sql
 ALTER TABLE hitdb ADD PRIMARY KEY (hitId);
-Code:
+```
+
+```sql
 CREATE TABLE workerdb (workerId VARCHAR(50), workerName VARCHAR(50), bonus FLOAT, transfer FLOAT);
-Code:
+```
+
+```sql
 ALTER TABLE workerdb ADD PRIMARY KEY (workerId);
+```
