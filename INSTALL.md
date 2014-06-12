@@ -10,6 +10,9 @@ These are platform-independent instructions to manually setup an user's environm
 + A C/C++ compatible compiler or systemwide compiling toolkit.
 + A git-compatible client or revision control system, to grab the latest trunk
 
+
+#### Dependencies Installation
+
 To begin, grab the latest trunk using your favorite Git client from
 
 https://github.com/DeliriumNocturnum/myTurkDB.git
@@ -26,7 +29,9 @@ The script requires manual setup of MySQL and the initial tables (one for hits, 
 
  + https://www.python.org/download/releases/2.7.7/
 
-3. Install the following Python modules...
+#### Required Python modules
+
+Install the following Python modules...
 
 *If you don't want to manually install the extra modules, then get Pip, it works in most OS's and will make installing the modules much easier.*
 
@@ -51,6 +56,9 @@ pip install mechanize
 ```bash
 pip install mysql-python==1.2.3
 ```
+
+
+#### Configuring mySQL
 
 Still with me? Good! The hardest part is done. From here we will need to set up the database and tables for MySQL. Since I'm such a swell guy, below you will find the instructions for setting these up from scratch. You should be able to copy/paste most of this and just run it to get going. All of this will be run from the mySQL command line (http://dev.mysql.com/doc/refman/5.6/en/mysql.html).
 
