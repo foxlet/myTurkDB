@@ -12,7 +12,7 @@ SET PATH=%PATH%;"C:\Program Files (x86)\MySQL\MySQL Server 5.6\bin"
 
 @echo Finished installing MySQL!
 
-@echo Installing Pyrthon 2.7.6
+@echo Installing Python 2.7.6
 
 START /wait msiexec /i python-2.7.6.msi /passive
 
@@ -38,18 +38,16 @@ pip install mechanize
 
 @echo Installing MySQL-Python Module
 
-START /wait MySQL-python-1.2.5.win32-py2.7.exe
+REM START /wait MySQL-python-1.2.5.win32-py2.7.exe
 
-mysql -uroot -proot -e "CREATE DATABASE mturk"
+easy_install mysql-python
 
-mysql -uroot -proot -e "GRANT USAGE ON *.* to mturk@localhost IDENTIFIED BY 'mturk'"
+mysql -uroot -proot -e "CREATE DATABASE mturk; GRANT USAGE ON *.* to mturk@localhost IDENTIFIED BY 'mturk'; GRANT ALL PRIVILEGES ON mturk.* TO mturk@localhost;"
 
-mysql -uroot -proot -e "GRANT ALL PRIVELEGES ON mturk.* TO mturk@localhost"
+mysql -uroot -proot -e "USE mturk; CREATE TABLE hitdb (hitId VARCHAR(100), date DATE, requesterName VARCHAR(100), requesterId VARCHAR(50), title VARCHAR(200), reward FLOAT, status VARCHAR(100), feedback VARCHAR(200), workerId VARCHAR(50))"
 
-mysql -uroot -proot -e "CREATE TABLE hitdb (hitId VARCHAR(100), date DATE, requesterName VARCHAR(100), requesterId VARCHAR(50), title VARCHAR(200), reward FLOAT, status VARCHAR(100), feedback VARCHAR(200), workerId VARCHAR(50))"
+mysql -uroot -proot -e "USE mturk; ALTER TABLE hitdb ADD PRIMARY KEY (hitId)"
 
-mysql -uroot -proot -e "ALTER TABLE hitdb ADD PRIMARY KEY (hitId)"
+mysql -uroot -proot -e "USE mturk; CREATE TABLE workerdb (workerId VARCHAR(50), workerName VARCHAR(50), bonus FLOAT, transfer FLOAT)"
 
-mysql -uroot -proot -e "CREATE TABLE workerdb (workerId VARCHAR(50), workerName VARCHAR(50), bonus FLOAT, transfer FLOAT)"
-
-mysql -uroot -proot -e "ALTER TABLE workerdb ADD PRIMARY KEY (workerId)"
+mysql -uroot -proot -e "USE mturk; ALTER TABLE workerdb ADD PRIMARY KEY (workerId)"

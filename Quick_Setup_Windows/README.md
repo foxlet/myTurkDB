@@ -10,7 +10,6 @@ These are platform-specific scripts to help setup an user's environment for myTu
 + An OS running Windows 7 or later
 + Python 2.7.6 -- https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi 
 + MySQL 5.6 -- http://dev.mysql.com/downloads/file.php?id=452278
-+ MySQL-Python 1.2.3 or later -- http://www.codegood.com/download/10/
 
 ##### Installation
 
@@ -20,7 +19,7 @@ The script will automatically install MySQL Server 5.6.
 
 The script will automatically install Python 2.7.6.
 
-The script will automatically install MySQL-Python 1.2.3 or later, depending on your download.  You will need to simply click "next" and "finish" during the install.
+The script will automatically install the needed python modules.
 
 The script will set up the tables.
 
