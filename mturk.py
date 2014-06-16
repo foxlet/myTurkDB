@@ -10,11 +10,6 @@ br = mechanize.Browser()
 br.set_handle_robots(False)
 br.addheaders = [("User-agent", "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.10 (maverick) Firefox/3.6.13")]  
 
-#Create Cookie Jar
-#cj = mechanize.LWPCookieJar()
-#cj.revert("./cookiejar")
-#br.set_cookiejar(cj)
-
 #Connect to MySQL and create cursor object for executing queries
 db = MySQLdb.connect(host="localhost", user="mturk", passwd="mturk", db="mturk")
 cur = db.cursor()
@@ -23,12 +18,10 @@ cur = db.cursor()
 sign_in = br.open('https://mturk.com/mturk/beginsignin')  
 
 br.select_form(name="signIn")  
-br["email"] = 'email' 
+br["email"] = 'gmail.com' 
 br["password"] = 'pass'
 logged_in = br.submit()
 
-#Save Cookie Jar
-#cj.save("./cookiejar", ignore_discard=True, ignore_expires=True)
 
 #Go to Dashboard
 dashboard = br.open('https://mturk.com/mturk/dashboard')
@@ -38,9 +31,9 @@ dash_soup = dashboard.read()
 dash_soup = BeautifulSoup(dash_soup)
 
 #Begin parsing Dashbaord
-approved = str(dash_soup.find_all(id='approved_hits_earnings_amount')[0].text).strip("$").encode("utf-8")
+#approved = str(dash_soup.find_all(id='approved_hits_earnings_amount')[0].text).strip("$").encode("utf-8")
 bonus = str(dash_soup.find_all(id='bonus_earnings_amount')[0].text).strip("$").encode("utf-8")
-total = str(dash_soup.find_all(id='total_earnings_amount')[0].text).strip("$").encode("utf-8")
+#total = str(dash_soup.find_all(id='total_earnings_amount')[0].text).strip("$").encode("utf-8")
 transfer = str(dash_soup.find_all(id='transfer_earnings')[0].text).strip("$").encode("utf-8")
 
 #Get worker ID, and name, store worker values to list
@@ -50,12 +43,12 @@ worker_values = [worker_ID,worker_name,bonus,transfer]
 
 #Update/insert worker data into database
 worker_statement = """REPLACE INTO mturk.workerdb(workerId,workerName,bonus,transfer) VALUES(%s, %s, %s, %s);"""
-cur.execute(worker_statement, (worker_values[0],worker_values[1],worker_values[2],worker_values[3]))
+cur.execute(worker_statement, [worker_values[0],worker_values[1],worker_values[2],worker_values[3]])
 
 #Begin parsing Hits
 
 #Find dates to update
-cur.execute("""SELECT DISTINCT date FROM hitdb WHERE status NOT IN ('Paid','Rejected') AND workerID = %s ORDER BY date;""", (worker_ID))
+cur.execute("""SELECT DISTINCT date FROM hitdb WHERE status NOT IN ('Paid','Rejected') AND workerID = %s ORDER BY date;""", [worker_ID])
 pending_hits_list = cur.fetchall()
 pending_date_list = []
 pending_link_list = []
@@ -181,5 +174,5 @@ for parse_page in pending_status_list:
 #Preparing SQL for insertion and commit to database
 for key,value in parsed_dict.iteritems():
 	replace_statement = "REPLACE INTO mturk.hitdb(hitId, date, requesterName, requesterId, title, reward, status, feedback, workerId) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);"
-	cur.execute(replace_statement, (value[0],value[1],value[2],value[3],value[4],value[5],value[6],value[7],value[8]))
+	cur.execute(replace_statement, [value[0],value[1],value[2],value[3],value[4],value[5],value[6],value[7],value[8]])
 db.commit()
