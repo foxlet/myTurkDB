@@ -29,6 +29,7 @@ The script will set up the tables.
 Quick Setup for Windows has been tested on
 
 + Windows 7 Professional x64 - Python 2.7.6
++ Windows 8.1 Pro x64 (Build 9600) - Python 2.7.6
 
 ### Quick Setup on Mac OS X
 
